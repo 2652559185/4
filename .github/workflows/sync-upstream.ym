@@ -1,0 +1,49 @@
+name: Upstream Sync
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: upstream-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync upstream
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git remote add upstream https://github.com/chthollyphile/folia-major.git || true
+          git fetch upstream
+
+          git checkout main
+
+          if ! git merge upstream/main --allow-unrelated-histories --no-edit; then
+            echo "Merge conflict, keeping our workflow file..."
+            git checkout --ours .github/workflows/sync-upstream.yml || true
+            git add .github/workflows/sync-upstream.yml || true
+
+            if git diff --name-only --diff-filter=U | grep -q .; then
+              echo "Unresolved conflicts:"
+              git diff --name-only --diff-filter=U
+              exit 1
+            fi
+
+            git commit -m "merge upstream (keep sync workflow)"
+          fi
+
+          git push origin main
