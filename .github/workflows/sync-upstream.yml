@@ -1,0 +1,41 @@
+name: Upstream Sync
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # 每天 UTC 0 点自动运行一次
+  workflow_dispatch:      # 允许在 Actions 页面手动触发
+
+jobs:
+  sync_latest_from_upstream:
+    name: Sync latest commits from upstream repo
+    runs-on: ubuntu-latest
+    if: ${{ github.event.repository.fork }}  # 仅在 Fork 仓库中运行
+
+    steps:
+      # 步骤 1: 检出你的 Fork 仓库
+      - name: Checkout target repo
+        uses: actions/checkout@v4
+
+      # 步骤 2: 执行同步操作
+      - name: Sync upstream changes
+        id: sync
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.3
+        with:
+          # 上游原仓库
+          upstream_sync_repo: chthollyphile/folia-major
+          # 上游分支
+          upstream_sync_branch: main
+          # 你的 Fork 仓库要同步的分支
+          target_sync_branch: main
+          # 使用自动生成的 GITHUB_TOKEN，无需手动配置密钥
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+      # 步骤 3: 如果同步失败，输出提示信息
+      - name: Sync check
+        if: failure()
+        run: |
+          echo "[Error] 由于上游仓库的 workflow 文件变更，导致 GitHub 自动暂停了本次自动更新，你需要手动 Sync Fork 一次。"
+          exit 1
