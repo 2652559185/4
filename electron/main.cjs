@@ -62,6 +62,8 @@ const {
 const { createKugouApiBridge } = require('./kugou/kugouApiBridge.cjs');
 const { createExternalUrlOpener } = require('./externalUrlPolicy.cjs');
 const { createSenderGuardedHandler } = require('./ipcAccessGuard.cjs');
+const { createQishuiApiBridge } = require('./qishui/qishuiApiBridge.cjs');
+const { createQishuiMediaPolicy } = require('./qishui/mediaCors.cjs');
 const { createBodianApiBridge } = require('./bodian/bodianApiBridge.cjs');
 const { createBodianMediaPolicy } = require('./bodian/mediaCors.cjs');
 const { createYtmApiBridge } = require('./ytm/ytmApiBridge.cjs');
@@ -267,6 +269,10 @@ const transcodeService = createTranscodeService({
 // KuGou credentials stay inside the main process and are encrypted lazily after Electron is ready.
 // The bridge refuses Linux's plaintext `basic_text` fallback and degrades to an in-memory session.
 const kugouApiBridge = createKugouApiBridge({ store, safeStorage });
+const qishuiMediaPolicy = createQishuiMediaPolicy();
+const qishuiApiBridge = createQishuiApiBridge({ store, safeStorage, fetch: (url, options) => electronNet.fetch(url, options),
+  onAudioSource: url => qishuiMediaPolicy.register(url),
+});
 const bodianMediaPolicy = createBodianMediaPolicy();
 const bodianApiBridge = createBodianApiBridge({ store, safeStorage,
   onAudioSource: url => bodianMediaPolicy.register(url),
@@ -3565,7 +3571,7 @@ function setupCorsBypassHandlers() {
         hostname === 'kugou.com' ||
         hostname.endsWith('.kugou.com') ||
         // Bodian audio and cover CDNs may omit CORS headers needed by Web Audio and canvas/WebGL.
-        bodianMediaPolicy.allows(details);
+        bodianMediaPolicy.allows(details) || qishuiMediaPolicy.allows(details);
     } catch (error) {
       isTargetDomain = false;
     }
@@ -3580,7 +3586,7 @@ function setupCorsBypassHandlers() {
     callback({ cancel: false, responseHeaders });
   });
 
-  ses.webRequest.onBeforeRedirect(details => bodianMediaPolicy.followRedirect(details));
+  ses.webRequest.onBeforeRedirect(details => { bodianMediaPolicy.followRedirect(details); qishuiMediaPolicy.followRedirect(details); });
 
   ses.webRequest.onErrorOccurred({ urls: ['*://*.kugou.com/*'] }, details => {
     const requestInfo = getKugouMediaRequestInfo(details);
@@ -5238,9 +5244,14 @@ function pollRemoteControlPointer() {
 }
 
 // Dragged past the outer left edge of the screens, the idle look's cover would be cut off. On
-// Windows the move can be held there as it happens; elsewhere a move cannot be refused.
+// Windows the move can be held there as it happens; elsewhere a move cannot be refused. With the
+// cover collapsed only the card in use is held, so it can reach the edge.
 function keepRemoteControlCoverOnScreen(win, event, newBounds) {
-  const x = clampRemoteControlWindowX(newBounds, screen.getAllDisplays().map(display => display.bounds));
+  const x = clampRemoteControlWindowX(
+    newBounds,
+    screen.getAllDisplays().map(display => display.bounds),
+    remoteControlExpandCoverEnabled,
+  );
   if (x !== newBounds.x) {
     // Windows then keeps the window where this puts it, and the drag slides along the edge.
     event.preventDefault();
@@ -5248,6 +5259,20 @@ function keepRemoteControlCoverOnScreen(win, event, newBounds) {
     // min === max === REMOTE_CONTROL_WINDOW_WIDTH/HEIGHT). Stating it on every move keeps the
     // window the size the page is laid out to, instead of leaving the platform to re-derive it.
     win.setBounds({ x, y: newBounds.y, width: REMOTE_CONTROL_WINDOW_WIDTH, height: REMOTE_CONTROL_WINDOW_HEIGHT });
+  }
+}
+
+// Switching the cover back on where the card was dragged to the edge: the strip left of the card
+// is off screen, so the window steps right until the cover fits, as a drag would have held it.
+function bringRemoteControlCoverOnScreen(win) {
+  if (process.platform !== 'win32' || !win || win.isDestroyed()) {
+    return;
+  }
+
+  const bounds = win.getBounds();
+  const x = clampRemoteControlWindowX(bounds, screen.getAllDisplays().map(display => display.bounds), true);
+  if (x !== bounds.x) {
+    win.setBounds({ x, y: bounds.y, width: REMOTE_CONTROL_WINDOW_WIDTH, height: REMOTE_CONTROL_WINDOW_HEIGHT });
   }
 }
 
@@ -6503,6 +6528,9 @@ ipcMain.handle('save-settings', (event, key, value) => {
 
   if (key === REMOTE_CONTROL_EXPAND_COVER_SETTING_KEY) {
     remoteControlExpandCoverEnabled = Boolean(nextValue);
+    if (remoteControlExpandCoverEnabled) {
+      bringRemoteControlCoverOnScreen(remoteControlWindow);
+    }
     applyRemoteControlWindowPresentation(remoteControlWindow);
   }
 
@@ -6788,6 +6816,10 @@ ipcMain.handle('kugou-api-request', createSenderGuardedHandler({
   isTrusted: isFirstPartyWindowContents,
   handler: (_event, operation, params) => kugouApiBridge.request(operation, params),
 }));
+ipcMain.handle('qishui-api-request', (event, operation, params) => {
+  if (!isTrustedMainWindowContents(event.sender)) return { ok: false, error: { code: 'unavailable', message: 'Untrusted Qishui request' } };
+  return qishuiApiBridge.request(operation, params);
+});
 ipcMain.handle('bodian-api-request', (event, operation, params) => {
   if (!isTrustedMainWindowContents(event.sender)) {
     return { ok: false, error: { code: 'unavailable', message: 'Untrusted Bodian request' } };
