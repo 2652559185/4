@@ -1,6 +1,9 @@
 
 
 export default {
+  "appleMusic": {
+    "libraryPlaylistName": "All songs"
+  },
   "scratchpad": {
     "title": "Scratchpad",
     "count_one": "{{count}} song",
@@ -335,7 +338,7 @@ export default {
     "columnAlbum": "Album",
     "columnTime": "Time",
     "enqueue": "Add to queue",
-    "hints": "↑↓ move · PgUp/PgDn page · Home/End · Enter play · Shift+Enter queue · Ctrl+Enter play all · Ctrl+Shift+Enter queue all · Esc back",
+    "hints": "↑↓ move · PgUp/PgDn page · Home/End · Enter play · Shift+Enter queue · {{mod}}+Enter play all · {{mod}}+Shift+Enter queue all · Esc back",
     "hintRemove": "Del remove",
     "hintDislike": "Del dislike",
     "hintOpenLinks": "Alt+Enter album · Alt+Shift+Enter artist",
@@ -357,7 +360,7 @@ export default {
     "itemType": {"playlist": "playlist", "album": "album", "artist": "artist", "folder": "folder", "cloud": "cloud", "radio": "radio", "daily_recommendations": "daily", "personal_fm": "fm"},
     "homeHints": "↑↓ move · PgUp/PgDn page · Tab section · F6 source · Enter open · Esc clear filter, then close",
     "homeTreeHints": "←→ fold",
-    "homeBatchHints": "Ins select · Ctrl+A all · Ctrl+Enter play · Ctrl+Shift+Enter queue",
+    "homeBatchHints": "Ins select · {{mod}}+A all · {{mod}}+Enter play · {{mod}}+Shift+Enter queue",
     "homeSelection": "{{count}} selected · {{tracks}} songs",
     "homeShown": "{{shown}} / {{total}}",
     "homeBusy": "working…",
@@ -395,7 +398,7 @@ export default {
     "bioMore": "more",
     "bioLess": "less",
     "columnYear": "Year",
-    "artistHints": "↑↓ move · Tab songs/albums · Enter play/open · Shift+Enter queue · Ctrl+Enter play all · Ctrl+Shift+Enter queue top songs · Esc back"
+    "artistHints": "↑↓ move · Tab songs/albums · Enter play/open · Shift+Enter queue · {{mod}}+Enter play all · {{mod}}+Shift+Enter queue top songs · Esc back"
   },
   "libraryBravaisCollection": {
     "matchCount": "{{matches}} / {{total}}",
@@ -429,6 +432,8 @@ export default {
     "homeBgEnabled": "Home dynamic background enabled",
     "autoBestLyricOn": "Auto-use best lyrics enabled",
     "autoBestLyricOff": "Auto-use best lyrics disabled",
+    "keepProviderWordTimingOn": "Platform word-timed lyrics kept",
+    "keepProviderWordTimingOff": "Platform word-timed lyrics no longer kept",
     "autoAiLyricSegmentationOn": "Automatic AI segmentation on",
     "autoAiLyricSegmentationOff": "Automatic AI segmentation off",
     "lyricSourceChanged": "Preferred lyric source switched to {{source}}",
@@ -995,6 +1000,7 @@ export default {
       "settings-netease-scrobble": { "title": "NetEase listening report", "description": "Jump to whether finished plays are reported to NetEase Cloud Music" },
       "netease-scrobble-toggle": { "title": "NetEase listening report", "description": "Turn reporting of finished NetEase plays on or off" },
       "auto-ai-lyric-segmentation-toggle": { "title": "Automatic AI lyric segmentation", "description": "Turn on or off segmenting each new song’s lyrics into words with AI by itself" },
+      "keep-provider-word-timing-toggle": { "title": "Keep platform word-timed lyrics", "description": "Turn on or off keeping the word-timed lyrics a song’s own platform comes with" },
       "settings-audio-output": { "title": "Audio output", "description": "Jump to the audio output device and format settings" },
       "hifi-toggle": { "title": "mpv playback engine", "description": "Switch local and Navidrome songs between Web Audio and mpv, which sends them straight to the output device" },
       "hifi-settings": { "title": "Playback engine settings", "description": "Open the playback engine settings: Web Audio or mpv, and mpv's output device, exclusive mode and DSD" },
@@ -2580,8 +2586,8 @@ export default {
     "updateChannelInternal": "Internal",
     "updateUnsupportedSystem": "Automatic updates are unavailable on the current system.",
     "updateUnsupportedChannel": "Automatic updates are unavailable for this internal build.",
-    "autoUpdateGithubNotice": "Auto update needs access to GitHub; if the network is unstable, keep a system proxy enabled.",
-    "updateCheckGithubNotice": "Version checks need access to GitHub. When an update is found, the app links to the full installer.",
+    "autoUpdateGithubNotice": "Auto update downloads from GitHub; if the network is unstable, keep a system proxy enabled. When GitHub can't be reached, the version check falls back to public proxies.",
+    "updateCheckGithubNotice": "Version checks read GitHub, falling back to public proxies when GitHub can't be reached. When an update is found, the app links to the full installer.",
     "openReleasePage": "Open Release Page",
     "downloadChina": "CN Download",
     "downloadSources": "Download from",
@@ -2647,6 +2653,8 @@ export default {
     "autoUseBestLyricDescSpotify": "Automatically search NetEase, AMLLDB, QQ, Kugou, and Spotify lyrics, prioritizing word-by-word lyrics with perfect timing matches.",
     "lyricMatchPriority": "Lyric match priority",
     "lyricMatchPriorityDesc": "When multiple lyric sources have high-confidence matches, prefer this source first.",
+    "keepProviderWordTiming": "Keep platform word-timed lyrics",
+    "keepProviderWordTimingDesc": "When an Apple Music song comes with word-timed lyrics, they are replaced only if the source chosen in Lyric match priority has word-timed lyrics too; no other source is searched. Turn off to pick among all sources by priority, like any other song.",
     "localLyricsPriority": "Local song lyrics priority",
     "localLyricsPriorityDesc": "Choose which lyrics are used first when a local song also has an online match. Manual lyric source choices are preserved.",
     "localLyricsPriorityLocal": "Local lyrics",
@@ -3842,6 +3850,10 @@ export default {
     "chinaDownload": "CN Download",
     "goToGithubRelease": "Go to GitHub release page",
     "chinaDownloadHint": "Note: GitHub downloads may be slow in China. Use Quark Drive or Baidu Drive instead.",
+    "githubUnreachableDrives": "GitHub can't be reached. Download the full v{{version}} installer from a network drive instead.",
+    "githubUnreachableCheckFailed": "GitHub can't be reached, so the update check failed. The latest full installer is on the network drives.",
+    "githubUnreachableDrivesQuiet": "Can't reach GitHub? The installer is also on network drives",
+    "githubUnreachableRetry": "GitHub can't be reached, so v{{version}} can't be downloaded right now. Try again later.",
     "macManualUpdateNotice": "Note: macOS requires downloading the full installer manually to update.",
     "linuxManualUpdateNotice": "Linux does not support automatic updates. Download the complete deb, rpm, or tar.gz package to upgrade manually; only stable AUR installations should upgrade folia-major-bin through the package manager.",
     "manualUpdateNotice": "Note: Automatic update is not supported on this platform. Please download the package manually.",
@@ -4046,6 +4058,25 @@ export default {
       "qqPrivatePlaylists": {
         "title": "Private QQ Music Playlists",
         "description": "When signed in, your own private playlists now load their songs, with real paging. Self-hosted backends must run qq-music-api 3.1.2 or later; older backends fall back automatically, and a playlist that cannot be read now says it is not public instead of silently showing as empty."
+      }
+    },
+    "v0_7_27": {
+      "intro": "Welcome to 0.7.27. Spotify gains Soloist playback, so accounts that cannot get audio keys can still play; Apple Music’s volume and mute now work, the library gets All songs, and its built-in word-timed lyrics give way to your preferred lyric source; and fnOS Music can sign in from outside your LAN with an FN ID.",
+      "soloist": {
+        "title": "Spotify: Soloist playback",
+        "description": "Some Spotify accounts (often ones created after late 2024) never receive audio keys, so Folia’s own playback cannot play them. When signing in you can now choose between Standard and Soloist: Soloist is Spotify’s official playback program, downloaded separately, and needs an API key generated with a Premium account. With Standard, Folia checks after sign-in whether the account can get keys and suggests Soloist if it cannot. A setup checklist walks you through installing the program, entering the key and pairing; open it from the account page, Platform playback setup in the command palette, or a playback failure notice. Soloist sends its sound straight to the system output, so Folia’s equalizer, Automix and video export do not apply to it. Also fixed: on Linux the whole app could freeze the first time Spotify played."
+      },
+      "amUpdate": {
+        "title": "Apple Music improvements",
+        "description": "The volume slider and mute now control Apple Music’s sound. Your library’s playlists gain All songs, for browsing every song you have saved. Startup shows your last account right away instead of a blank wait, and on desktop the playing song no longer stops when the window is rebuilt (for example when toggling window transparency)—the new window carries on. When a song has built-in word-timed lyrics, Folia switches to the source chosen in Lyric match priority (QQ Music by default) if it also has word-timed lyrics, so you no longer swap in translated lyrics by hand for every song. A new lyric setting, Keep platform word-timed lyrics, can be turned off to let Apple Music songs pick the best lyrics from all sources like any other song."
+      },
+      "fnConnect": {
+        "title": "fnOS Music: sign in with an FN ID",
+        "description": "The fnOS Music server address can now be just an FN ID (such as mynas): Folia reaches your fnOS device through the FN Connect relay, so you can sign in and play outside your local network. Addresses with a scheme, port or path still connect directly, and relayed connections always use HTTPS."
+      },
+      "moreDetails": {
+        "title": "More improvements",
+        "description": "Lines without itunes:key in local .ttml lyrics are no longer dropped, so TTML converted by other tools displays properly. Fixed Kugou accounts breaking (and songs failing to load) after opening someone else’s public playlist. The Scratchpad panel now uses an info strip on top and slim paper strips at the bottom, cards in the full-page view are a size larger, and narrow phone screens no longer crowd. On macOS, pinning Ponder and opening a song’s platform page from its title now use ⌘, with hints shown per platform. Nebbia’s aquarium no longer blows out to white under the spotlights, and with beat motion its plants sway only to the beat. Bravais album posters no longer overflow when there are many artists or a long blurb, long artist lists can be expanded, and text on the tilted poster is no longer blurry."
       }
     },
     "v0_7_26": {
@@ -4768,12 +4799,12 @@ export default {
   },
   "fnmusic": {
     "serverUrl": "Server address",
-    "serverUrlPlaceholder": "e.g. http://192.168.1.10:5666",
+    "serverUrlPlaceholder": "e.g. http://192.168.1.10:5666 or a pure FN ID (e.g. mynas)",
     "username": "Account",
     "usernamePlaceholder": "fnOS Music account or NAS account",
     "password": "Password",
     "login": "Log in",
-    "loginNote": "Enter your fnOS Music server address, account and password",
+    "loginNote": "Enter your fnOS Music server address (LAN address or pure FN ID), account and password",
     "errorBadCredentials": "Account or password is wrong",
     "errorNetwork": "Cannot reach the server. Check the address and your connection.",
     "errorBadResponse": "The server returned an unexpected response",
@@ -5041,7 +5072,9 @@ export default {
   },
   "libraryBravaisAlbum": {
     "posterLabel": "Album poster",
-    "openArtist": "Open artist {{name}}"
+    "openArtist": "Open artist {{name}}",
+    "expandArtists": "Show all {{count}} artists",
+    "collapseArtists": "Show less"
   },
   "artistGrid": {
     "localArtist": "Local Artist: {{artistName}}",
@@ -5423,7 +5456,7 @@ export default {
       "lyric_export": "Packs the lyrics cached on this device into one zip of .fia and enhanced LRC files.",
       "player_bar": "What is on the capsule, how to swap its two slots in place, and the quick actions that float up when you rest on it.",
       "player_page": "What is on the player page, where each thing sits, and how to shuffle.",
-      "ponder_basics": "Hover hints, hold G, whole-page Ctrl+G, and how to turn the hints off.",
+      "ponder_basics": "Hover hints, hold G, whole-page {{mod}}+G, and how to turn the hints off.",
       "settings_page": "How settings are grouped, and jumping straight there from the command window.",
       "side_panel": "How the panel is built and how to switch tabs.",
       "theme_settings": "Presets, where a custom palette comes from, and when it changes by itself.",
@@ -5441,9 +5474,9 @@ export default {
     "noComponentsOnPage": "No separate component guides on this page yet.",
     "onboarding": {
       "title": "Meet Ponder",
-      "description": "Hold Ctrl + G now until the capsule fills, and the guide for the page you are on opens.",
+      "description": "Hold {{mod}} + G now until the capsule fills, and the guide for the page you are on opens.",
       "touchDescription": "Tap the button below now to open the guide for this page.",
-      "shortcut": "Hold Ctrl + G",
+      "shortcut": "Hold {{mod}} + G",
       "required": "Try the page Ponder once to continue."
     },
     "allChaptersDone": "That is all of them.",
@@ -6276,7 +6309,7 @@ export default {
       "customShortcut": {
         "alt": "The left half of this row is two key caps, and only the second one is yours. Alt is drawn already pressed because it cannot be changed: this shortcut is always Alt plus one letter, so there is no way to record Ctrl+Shift+X or any other chord here.",
         "capture": "Click the second cap and it starts listening; the next key you press becomes the letter. Modifiers held on the way there are ignored, and Esc backs out without recording anything.",
-        "taken": "A letter that already opens something is refused on the spot, with the reason in red under the caps. S and Ctrl+K belong to the command window itself, and every hotkey in the registry reserves its own \u2014 so the list of taken letters grows on its own as Folia gains shortcuts.",
+        "taken": "A letter that already opens something is refused on the spot, with the reason in red under the caps. S and {{mod}}+K belong to the command window itself, and every hotkey in the registry reserves its own \u2014 so the list of taken letters grows on its own as Folia gains shortcuts.",
         "clear": "Once a letter is recorded, a small \u2715 appears beside the caps. It clears the binding, and the shortcut then runs nothing until you record another one.",
         "filtered": "The select on the right does not list every command. A shortcut fires from anywhere, so only commands that work anywhere may be bound to one \u2014 anything that needs a particular page or panel is left out. That is why a command you can find in the command window may simply not be here, and nothing on screen explains the gap.",
         "goesQuiet": "The same check runs when the key is pressed, not only when you pick. If a command later grows a requirement, or the registry claims your letter, the binding goes quiet rather than doing something else \u2014 so a shortcut that stopped working is worth re-picking here."
@@ -6304,12 +6337,12 @@ export default {
         "derived": "The rows at the bottom are why this dialog exists: changes the config never asked for, but that follow from the ones you did take. Accepting someone\u2019s colours switches the app to the custom theme; accepting a system font deletes the font file you uploaded. They cannot be unchecked on their own \u2014 decline what causes them instead."
       },
       "onboarding": {
-        "overviewCtrlG": "Step 1: On any page, press Ctrl + G to open Ponder for that page.",
+        "overviewCtrlG": "Step 1: On any page, press {{mod}} + G to open Ponder for that page.",
         "overviewWholePage": "Ponder walks through the current page step by step: what is on it, where each part is, and what you can do. What you are watching now is a Ponder.",
         "overviewHover": "Step 2: Some buttons and components are more complex. Rest the pointer on one and a Ponder hint appears beside it.",
         "overviewHold": "Step 3: When the hint appears, hold G. When the wipe fills, that component’s Ponder opens; let go early to cancel.",
         "overviewSettings": "If you do not need these hints, turn them off in Settings. The button below opens Settings directly.",
-        "overviewCommandPalette": "Press Ctrl + K from any screen to open the command palette. The command palette is the primary way to operate the app, and lets you adjust common features from any page.",
+        "overviewCommandPalette": "Press {{mod}} + K from any screen to open the command palette. The command palette is the primary way to operate the app, and lets you adjust common features from any page.",
         "overviewExampleVolume": "For example, adjust the volume from anywhere.",
         "overviewExampleQueue": "Or bring up queue search.",
         "overviewExampleFilter": "Or search within the current playlist again and send the results to the playback queue.",
@@ -6317,14 +6350,14 @@ export default {
         "here": "You have a Ponder tutorial open \u2014 this screen. It is not a video: drag the progress bar below, jump between keyframes with the arrow keys, Space pauses, Escape leaves at any time.",
         "hover": "Rest the pointer on one of the less obvious buttons or components and a small badge appears beside it, naming the tutorial it would open. Hold G until the wipe fills and that component\u2019s tutorial starts.",
         "hold": "Keep holding and the wipe fills the capsule from left to right; when it reaches the end you are inside that component\u2019s tutorial \u2014 a full screen like this one. Let go too early and it cancels with nothing happening.",
-        "wholePage": "You do not have to find a component: hold Ctrl + G anywhere and you get the whole page \u2014 what is on it, where each thing sits, what you can do with it.",
+        "wholePage": "You do not have to find a component: hold {{mod}} + G anywhere and you get the whole page \u2014 what is on it, where each thing sits, what you can do with it.",
         "touchBulb": "A touch screen has no hover, so that whole route is unavailable. In its place is this lightbulb in the top-right corner, and it only appears on touch devices \u2014 not finding it with a mouse is expected. It shows itself for a few seconds when you land or change pages and then folds away so it is not in the way; tap the top-right corner to call it back.",
         "mediaKeys": "Playback goes through the system media session \u2014 SMTC on Windows, MPRIS on Linux. That means the play / previous / next keys on your keyboard work directly, so you never have to switch back to Folia while you are working in another window. The system media popup shows the current track too.",
         "inAppTransport": "Inside the app: Space plays and pauses, {{mod}} + \u2190 / \u2192 move between tracks. On the player page the bare arrow keys seek five seconds. Everything else lives in the command window, or a colon away in execute mode.",
         "shortcutK": "{{mod}} + K opens the command window. Folia keeps the whole of \u201cfinding a feature\u201d in here \u2014 commands and settings are both searchable by name, so you never have to remember which level something is filed under.",
         "shortcutP": "{{mod}} + P opens the play queue. It is a command window too: the input line is the queue\u2019s search box, and things like @artist: narrow it down before a bulk action.",
         "shortcutB": "{{mod}} + B goes to Lattice, which lays the whole play queue out as a poster wall. Press it inside Lattice and it goes back.",
-        "shortcutG": "Ctrl + G is what you just did: it opens the tutorial for the current page. Whenever you are lost, press it first.",
+        "shortcutG": "{{mod}} + G is what you just did: it opens the tutorial for the current page. Whenever you are lost, press it first.",
         "hintSettings": "Know your way around Folia already? You can turn the Ponder hints off in settings, or keep them only where you have not looked yet \u2014 the switch is under Settings \u00b7 General, \u201cPonder tutorial hints\u201d, with three positions: always show, only where you have not looked yet, and off. The button below takes you straight there.",
         "docs": "These four chapters are only the opening. Commands, shortcuts, online sources, the local library, visualizers and themes all have fuller write-ups on the docs site \u2014 the button below opens it."
       },
@@ -6342,7 +6375,7 @@ export default {
         "gridMap": "The All button opens GridMap for a dense overview. Click to select and activate to enter; {{mod}} + F or typing in GridMap filters collections.",
         "gridSearchResult": "Submitting the header search opens a separate song workspace. Results can be played, opened by artist or album, or added to the queue.",
         "gridCardKeys": "Left and Right change the centered poster; Enter opens it. Wheel and horizontal drag perform the same focus movement.",
-        "gridPageKeys": "Tab / Shift + Tab cycle the tabs, {{mod}} + K opens the command window, {{mod}} + B enters Lattice when a queue exists, and Ctrl + G opens Ponder for this page.",
+        "gridPageKeys": "Tab / Shift + Tab cycle the tabs, {{mod}} + K opens the command window, {{mod}} + B enters Lattice when a queue exists, and {{mod}} + G opens Ponder for this page.",
         "gridView": "A collection grid contains the songs, albums, or artists inside the card you opened. Back returns to the parent grid without losing your place.",
         "gridViewActions": "Select a card to play or open it. The page actions also expose play-all, queue, editing, and collection-specific tools when available.",
         "gridViewBack": "The top-left button leaves this collection and clears its transient navigation record. Escape also returns when no inner state remains.",
@@ -6380,7 +6413,7 @@ export default {
         "latticeLights": "Lights Off dims the wall while retaining its structure. It is only a display setting: playback and queue order are unchanged.",
         "latticePosterKeys": "Enter or Space expands a closed poster. Once open, Enter plays or pauses, Space toggles controls, and Escape collapses and clears focus first.",
         "latticePageKeys": ": + C locates the playing song, {{mod}} + P opens the queue, {{mod}} + B goes back, {{mod}} + K opens the command window; arrow keys move poster focus.",
-        "help": "Folia separates browsing, playback, commands, and options. Ctrl+G explains the page currently in front of you; component guides appear separately when that component has special behavior.",
+        "help": "Folia separates browsing, playback, commands, and options. {{mod}}+G explains the page currently in front of you; component guides appear separately when that component has special behavior.",
         "helpCommands": "{{mod}} + K searches every command and setting. For options buried deep, searching the name is usually faster than remembering which level it sits on.",
         "helpOperatingModel": "Choose music in a grid, then playback continues independently in Player or Lattice. The bottom bar controls transport everywhere; Help and Options are overlays above the current page.",
         "settings": "The left side lists the categories under Interface, Music, App and Advanced. The right side contains the settings of the selected category.",
@@ -6475,7 +6508,7 @@ export default {
         "sourceExportFormats": "The top of the window imports: lrc, vtt, ttml, qrc, yrc, krc, txt and the .fia files Folia exports. Navidrome songs cannot import, so their window only exports. The two tiles below save this song: .fia keeps word timing, translations, background vocals and your saved segmentation and imports straight back; .lrc is enhanced LRC that other players read, but those Folia-only details are dropped.",
         "sourceExportBatch": "The bottom row is the batch export: it opens the export page in the command palette and saves every lyric cached on this device at once. The Lyrics row under Cache Details in Settings · Storage & backup has the same entry.",
         "coverTab": "The Cover tab is the song itself: the large cover, the title, artists and album under it, then a row of actions. There is nothing else on this tab.",
-        "coverTabDetail": "Artist and album are both links into their collections. Clicking the title copies \u201ctitle - artist - album\u201d together with the source page link; Ctrl-click opens this song's page on its source platform instead.",
+        "coverTabDetail": "Artist and album are both links into their collections. Clicking the title copies \u201ctitle - artist - album\u201d together with the source page link; {{mod}}-click opens this song's page on its source platform instead.",
         "controlsTab": "The Controls tab starts with the volume row; the three tiles under it are loop, Smart transition and Audio effects: the first two switch on a click, the third opens a window.",
         "controlsTabDetail": "Below are the Lyrics Style and Background Type rows and the “Transparent player background” switch; the last two rows are the theme: its source, the current theme, light or dark, and generating an AI theme. Audio gain and the lyric offset are on the source tab.",
         "queueTab": "The Playlist tab is the whole of the current play queue; the line at the top says how many songs are in it.",

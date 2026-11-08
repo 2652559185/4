@@ -507,6 +507,11 @@ export interface OnlineExternalPlaybackProvider {
     isPrepared?(song: SongResult): boolean;
     /** Starts `song` in the player at `startSec`, replacing whatever it played; resolves once started. */
     play(song: SongResult, startSec: number): Promise<void>;
+    /**
+     * The player already has `song` loaded (started by a window of this app that is gone): take it
+     * as this provider's current playback without starting it, so successors can be prepared for it.
+     */
+    adopt?(song: SongResult): void;
     pause(): Promise<void>;
     resume(): Promise<void>;
     seek(seconds: number): Promise<void>;
@@ -525,8 +530,10 @@ export interface OnlineLyricsProvider {
     getSearchAlias?(song: SongResult): Promise<ProviderLyricSearchAlias | null>;
     getLyrics(song: SongResult, context?: { userId?: MediaId | null }): Promise<ProviderLyricsResult>;
     /**
-     * Where its own lyrics are word-level, they are the timings to use even with automatic
-     * matching on: another source may have words too, but not this platform's own timing.
+     * Where its own lyrics are word-level, the automatic pick asks only the listener's preferred
+     * source before them, and takes that source's words alone over them: another source may have
+     * words too, but not this platform's own timing. The listener can turn this off (lyric
+     * settings), and the platform's lyrics are then matched like any other source's.
      * Off where the platform leaves the choice to the automatic pick.
      */
     prefersOwnWordByWord?: boolean;

@@ -1,6 +1,9 @@
 
 
 export default {
+  "appleMusic": {
+    "libraryPlaylistName": "全部歌曲"
+  },
   "scratchpad": {
     "title": "速记簿",
     "count_one": "{{count}} 首",
@@ -335,7 +338,7 @@ export default {
     "columnAlbum": "专辑",
     "columnTime": "时长",
     "enqueue": "加入播放队列",
-    "hints": "↑↓ 移动 · PgUp/PgDn 翻页 · Home/End · Enter 播放 · Shift+Enter 入队 · Ctrl+Enter 播放全部 · Ctrl+Shift+Enter 全部入队 · Esc 返回",
+    "hints": "↑↓ 移动 · PgUp/PgDn 翻页 · Home/End · Enter 播放 · Shift+Enter 入队 · {{mod}}+Enter 播放全部 · {{mod}}+Shift+Enter 全部入队 · Esc 返回",
     "hintRemove": "Del 删除",
     "hintDislike": "Del 不喜欢",
     "hintOpenLinks": "Alt+Enter 打开专辑 · Alt+Shift+Enter 打开歌手",
@@ -357,7 +360,7 @@ export default {
     "itemType": {"playlist": "歌单", "album": "专辑", "artist": "歌手", "folder": "文件夹", "cloud": "云盘", "radio": "电台", "daily_recommendations": "每日", "personal_fm": "FM"},
     "homeHints": "↑↓ 移动 · PgUp/PgDn 翻页 · Tab 分区 · F6 来源 · Enter 打开 · Esc 先清筛选再关闭",
     "homeTreeHints": "←→ 折叠",
-    "homeBatchHints": "Ins 选中 · Ctrl+A 全选 · Ctrl+Enter 播放 · Ctrl+Shift+Enter 入队",
+    "homeBatchHints": "Ins 选中 · {{mod}}+A 全选 · {{mod}}+Enter 播放 · {{mod}}+Shift+Enter 入队",
     "homeSelection": "已选 {{count}} 项 · {{tracks}} 首",
     "homeShown": "{{shown}} / {{total}}",
     "homeBusy": "处理中…",
@@ -395,7 +398,7 @@ export default {
     "bioMore": "展开",
     "bioLess": "收起",
     "columnYear": "年份",
-    "artistHints": "↑↓ 移动 · Tab 歌曲/专辑 · Enter 播放/打开 · Shift+Enter 入队 · Ctrl+Enter 全部播放 · Ctrl+Shift+Enter 热门歌曲入队 · Esc 返回"
+    "artistHints": "↑↓ 移动 · Tab 歌曲/专辑 · Enter 播放/打开 · Shift+Enter 入队 · {{mod}}+Enter 全部播放 · {{mod}}+Shift+Enter 热门歌曲入队 · Esc 返回"
   },
   "libraryBravaisCollection": {
     "matchCount": "{{matches}} / {{total}}",
@@ -429,6 +432,8 @@ export default {
     "homeBgEnabled": "主页动态背景已开启",
     "autoBestLyricOn": "自动使用最佳歌词已开启",
     "autoBestLyricOff": "自动使用最佳歌词已关闭",
+    "keepProviderWordTimingOn": "已保留平台自带的逐字歌词",
+    "keepProviderWordTimingOff": "平台自带的逐字歌词不再优先保留",
     "autoAiLyricSegmentationOn": "自动 AI 分词已开启",
     "autoAiLyricSegmentationOff": "自动 AI 分词已关闭",
     "lyricSourceChanged": "优先匹配歌词源已切换为{{source}}",
@@ -995,6 +1000,7 @@ export default {
       "settings-netease-scrobble": { "title": "网易云听歌打卡", "description": "直接跳到是否把播放记录上报给网易云音乐" },
       "netease-scrobble-toggle": { "title": "网易云听歌打卡", "description": "开启或关闭把播放记录上报给网易云音乐" },
       "auto-ai-lyric-segmentation-toggle": { "title": "自动 AI 分词", "description": "开启或关闭新歌自动用 AI 给歌词分词" },
+      "keep-provider-word-timing-toggle": { "title": "保留平台自带的逐字歌词", "description": "开启或关闭自动择优时保留 Apple Music 等平台自带的逐字歌词" },
       "settings-audio-output": { "title": "音频输出", "description": "直接跳到音频输出设备与格式设置" },
       "hifi-toggle": { "title": "mpv 播放引擎", "description": "在 Web Audio 和 mpv 之间切换本地与 Navidrome 歌曲的播放引擎；mpv 直接送到输出设备" },
       "hifi-settings": { "title": "播放引擎设置", "description": "打开播放引擎设置：Web Audio 或 mpv，以及 mpv 的输出设备、独占模式和 DSD" },
@@ -2580,8 +2586,8 @@ export default {
     "updateChannelInternal": "内部构建",
     "updateUnsupportedSystem": "当前系统不支持自动更新。",
     "updateUnsupportedChannel": "此内部构建不支持自动更新。",
-    "autoUpdateGithubNotice": "自动更新需要能够访问 GitHub；网络不稳定时可能无法下载更新。",
-    "updateCheckGithubNotice": "版本检查需要能够访问 GitHub；发现更新后会提供完整安装包入口。",
+    "autoUpdateGithubNotice": "自动更新的下载需要能够访问 GitHub；版本检查连不上 GitHub 时会改用公共代理。",
+    "updateCheckGithubNotice": "版本检查连不上 GitHub 时会改用公共代理；发现更新后会提供完整安装包入口。",
     "openReleasePage": "打开发布页",
     "downloadChina": "国内下载",
     "downloadSources": "下载来源",
@@ -2647,6 +2653,8 @@ export default {
     "autoUseBestLyricDescSpotify": "自动检索网易云、AMLLDB、QQ、酷狗和 Spotify 歌词，若存在完美匹配的逐字歌词则自动优先采用。",
     "lyricMatchPriority": "歌词匹配优先级",
     "lyricMatchPriorityDesc": "在多个歌词源都存在匹配度满足要求的歌词时，优先选择该歌词源的结果。",
+    "keepProviderWordTiming": "保留平台自带的逐字歌词",
+    "keepProviderWordTimingDesc": "Apple Music 的歌自带逐字歌词时，只有“歌词匹配优先级”选的歌词源也有逐字歌词才换掉它，其他歌词源不再搜索。关闭后和其他歌一样，按优先级在各歌词源里择优。",
     "localLyricsPriority": "本地歌曲歌词优先级",
     "localLyricsPriorityDesc": "本地歌曲同时存在在线匹配歌词时，选择优先使用的歌词。手动指定的歌词来源不受影响。",
     "localLyricsPriorityLocal": "本地歌词",
@@ -3843,6 +3851,10 @@ export default {
     "chinaDownload": "网盘下载",
     "goToGithubRelease": "前往Github下载页",
     "chinaDownloadHint": "提示：下载需直连 GitHub（可能较慢），国内环境推荐使用夸克或百度网盘。",
+    "githubUnreachableDrives": "连不上 GitHub，可以从网盘下载 v{{version}} 的完整安装包。",
+    "githubUnreachableCheckFailed": "连不上 GitHub，没能检查更新。可以到网盘查看最新的完整安装包。",
+    "githubUnreachableDrivesQuiet": "GitHub 连不上，也可以从网盘下载",
+    "githubUnreachableRetry": "连不上 GitHub，暂时没法下载 v{{version}}，请稍后再试。",
     "macManualUpdateNotice": "提示：macOS 版本需要下载完整安装包手动覆盖更新。",
     "linuxManualUpdateNotice": "提示：Linux 不支持自动更新。请下载完整的 deb、rpm 或 tar.gz 包手动升级；仅正式版且通过 AUR 安装的用户可使用包管理器升级 folia-major-bin。",
     "manualUpdateNotice": "提示：当前平台暂不支持自动更新，请下载安装包手动覆盖更新。",
@@ -4046,6 +4058,25 @@ export default {
       "qqPrivatePlaylists": {
         "title": "QQ 音乐不公开歌单",
         "description": "登录后，自己创建的不公开歌单也能读取歌曲，并支持真正的分页加载。自建后端需要升级到 qq-music-api 3.1.2 或更新版本；旧后端会自动回退，读不到时会明确提示「不是公开歌单」，不再静默显示为空。"
+      }
+    },
+    "v0_7_27": {
+      "intro": "欢迎来到 0.7.27。Spotify 新增 Soloist 播放方式，拿不到音频密钥的账号也能听歌；Apple Music 的音量和静音现在能用了，资料库多了「全部歌曲」，自带的逐字歌词也会让位给你选的优先歌词源；飞牛音乐在局域网外填 FN ID 就能登录。",
+      "soloist": {
+        "title": "Spotify：Soloist 播放",
+        "description": "有些 Spotify 账号（多见于 2024 年底以后注册的）拿不到音频密钥，Folia 自己的播放方式放不了。现在登录时可以在「标准播放」和「Soloist 播放」之间二选一：Soloist 是 Spotify 官方的播放程序，需要另外下载，并用 Premium 账号生成一把 API 密钥。选标准播放时，登录后会先试一下这个账号能不能拿到密钥，拿不到就提示改用 Soloist。配置清单一步步带你装好程序、填好密钥、配对设备，也可以从账号页、命令面板的「平台播放设置」或播放失败的提示里打开。Soloist 自己把声音送到系统输出，Folia 的均衡器、Automix 和视频导出不作用于它。另外修复了 Linux 上第一次播放 Spotify 时整个应用卡住的问题。"
+      },
+      "amUpdate": {
+        "title": "Apple Music 改进",
+        "description": "音量条和静音现在能控制 Apple Music 的声音。资料库的歌单里多了「全部歌曲」，可以浏览收藏的所有歌曲。启动时直接显示上次登录的账号，不再空着等几秒；桌面版窗口重建（例如开关窗口透明）时，正在放的歌不再停下，新窗口接着播放。歌曲自带逐字歌词时，「歌词匹配优先级」选的歌词源（默认 QQ 音乐）如果也有逐字歌词，就改用它，想要带翻译的歌词不必每首手动换；歌词设置里新增「保留平台自带的逐字歌词」，关掉后 Apple Music 的歌和其他歌一样，在全部歌词源里择优。"
+      },
+      "fnConnect": {
+        "title": "飞牛音乐：外网用 FN ID 登录",
+        "description": "飞牛音乐的服务器地址可以只填 FN ID（例如 mynas），Folia 经 FN Connect 中继连上你的 fnOS 设备，不在同一个局域网也能登录和播放。填了协议、端口或路径的地址仍按原样直连；经中继时一律走 HTTPS。"
+      },
+      "moreDetails": {
+        "title": "更多改进",
+        "description": "本地 .ttml 歌词里没有 itunes:key 的行不再被整行丢掉，其他工具转出来的 TTML 也能正常显示。修复酷狗打开别人的公开歌单后账号失效、取歌失败的问题。速记簿的面板改成顶上的信息条和底部的细纸带，展开整页的卡片放大一档，手机宽度下不再挤在一起。macOS 上思索的固定和歌名打开平台页面改用 ⌘ 键，提示也按平台显示。雾笺水族箱的聚光灯处不再白成一片，跟拍时水草只随节拍摆动。Bravais 的专辑海报在歌手和简介很多时不再溢出，歌手多了可以展开查看；倾斜的海报文字不再发糊。"
       }
     },
     "v0_7_26": {
@@ -4768,12 +4799,12 @@ export default {
   },
   "fnmusic": {
     "serverUrl": "服务器地址",
-    "serverUrlPlaceholder": "例如: http://192.168.1.10:5666",
+    "serverUrlPlaceholder": "例如: http://192.168.1.10:5666 或纯 FN ID（如 mynas）",
     "username": "账号",
     "usernamePlaceholder": "飞牛音乐账号或 NAS 账号",
     "password": "密码",
     "login": "登录",
-    "loginNote": "输入你的飞牛（fnOS）音乐服务器地址与账号密码",
+    "loginNote": "输入你的飞牛（fnOS）音乐服务器地址（局域网地址或纯 FN ID）与账号密码",
     "errorBadCredentials": "账号或密码错误",
     "errorNetwork": "无法连接服务器，请检查地址与网络",
     "errorBadResponse": "服务器返回了无法识别的响应",
@@ -5041,7 +5072,9 @@ export default {
   },
   "libraryBravaisAlbum": {
     "posterLabel": "专辑海报",
-    "openArtist": "打开歌手 {{name}}"
+    "openArtist": "打开歌手 {{name}}",
+    "expandArtists": "展开全部 {{count}} 位歌手",
+    "collapseArtists": "收起"
   },
   "artistGrid": {
     "localArtist": "本地歌手: {{artistName}}",
@@ -5423,7 +5456,7 @@ export default {
       "lyric_export": "把本机缓存的歌词批量导成 .fia 和增强型 LRC，打成一个 zip。",
       "player_bar": "整条胶囊上有什么、右边两个按钮怎么就地换，以及停一下浮出来的快捷操作。",
       "player_page": "播放页上有什么、各在哪，以及随机播放怎么做。",
-      "ponder_basics": "悬停出提示、长按 G、整页 Ctrl+G，以及怎么把提示关掉。",
+      "ponder_basics": "悬停出提示、长按 G、整页 {{mod}}+G，以及怎么把提示关掉。",
       "settings_page": "设置怎么分组，以及从命令窗口直接跳过去。",
       "side_panel": "面板分几段、怎么换页。",
       "theme_settings": "预设、自定义配色从哪来，以及配色什么时候自己变。",
@@ -5441,9 +5474,9 @@ export default {
     "noComponentsOnPage": "本页暂时没有单独的组件教程。",
     "onboarding": {
       "title": "认识思索模式",
-      "description": "按住 Ctrl + G，等进度走满，打开当前页面介绍。",
+      "description": "按住 {{mod}} + G，等进度走满，打开当前页面介绍。",
       "touchDescription": "现在点下面的按钮，打开当前页面的介绍。",
-      "shortcut": "按住 Ctrl + G",
+      "shortcut": "按住 {{mod}} + G",
       "required": "完成一次页面思索后才能继续。"
     },
     "allChaptersDone": "全部章节都看完了。",
@@ -6276,7 +6309,7 @@ export default {
       "customShortcut": {
         "alt": "左边固定为 Alt，右边录入字母。只支持 Alt + 字母。",
         "capture": "点第二颗键帽开始录入，下次按下的字母会绑定。修饰键忽略，按 Esc 取消。",
-        "taken": "已被占用的字母不能绑定，红字会说明原因。S、Ctrl+K 和其他命令的快捷键都算占用。",
+        "taken": "已被占用的字母不能绑定，红字会说明原因。S、{{mod}}+K 和其他命令的快捷键都算占用。",
         "clear": "录上之后键帽旁边会多一颗小小的 ✕，按它就把绑定清掉；在你重新录一颗之前，这条快捷键什么都不运行。",
         "filtered": "下拉框只列出可在所有页面使用的命令；依赖特定页面或面板的命令不会出现。",
         "goesQuiet": "快捷键执行时还会再次检查条件。命令失效或按键被占用时，它不会改做别的事，只会失效。"
@@ -6304,12 +6337,12 @@ export default {
         "derived": "有些改动不会写在配置里，但会随导入发生：例如切到自定义主题、删除已上传字体。它们不能单独取消，只能取消对应的主改动。"
       },
       "onboarding": {
-        "overviewCtrlG": "第一步：在任何页面按下 Ctrl + G，就能打开这一页的思索。",
+        "overviewCtrlG": "第一步：在任何页面按下 {{mod}} + G，就能打开这一页的思索。",
         "overviewWholePage": "思索会一步一步讲解当前页面：上面有什么，各在哪里，可以怎么操作。你现在看的就是一段思索。",
         "overviewHover": "第二步：有些按钮和组件比较复杂。把指针停在上面，旁边会出现思索提示。",
         "overviewHold": "第三步：看到提示后，按住 G 不放。进度走满后，会打开这个组件的思索；提前松手则取消。",
         "overviewSettings": "不需要这些提示时，可以在设置中关闭。点下方按钮可直接打开设置。",
-        "overviewCommandPalette": "在任何界面，按 Ctrl + K 呼出命令面板。命令面板是应用的主要操作方式。使用命令面板可以在任何页面进行常用功能调整。",
+        "overviewCommandPalette": "在任何界面，按 {{mod}} + K 呼出命令面板。命令面板是应用的主要操作方式。使用命令面板可以在任何页面进行常用功能调整。",
         "overviewExampleVolume": "例如在任何地方调节音量。",
         "overviewExampleQueue": "或者拉起队列搜索。",
         "overviewExampleFilter": "或者直接对当前歌单进行二次检索，然后送入播放队列。",
@@ -6317,14 +6350,14 @@ export default {
         "here": "这是当前页面的思索教程，不是视频。进度条可拖，方向键切换关键帧，Space 暂停，Esc 退出。",
         "hover": "悬停在按钮或组件上会出现提示。按住 G，进度走满后打开对应教程。",
         "hold": "按住不放，进度走满后打开教程；提前松手会取消。",
-        "wholePage": "不想找组件也行：在任意页面上按住 Ctrl + G，打开的是整页的教程 —— 这一页上有什么、各在哪、能怎么操作。",
+        "wholePage": "不想找组件也行：在任意页面上按住 {{mod}} + G，打开的是整页的教程 —— 这一页上有什么、各在哪、能怎么操作。",
         "touchBulb": "触屏没有悬停，所以用右上角灯泡打开本页教程。它出现几秒后会收起，点右上角可再次唤出。鼠标看不到它是正常的。",
         "mediaKeys": "Windows 用 SMTC，Linux 用 MPRIS；系统媒体键和媒体浮窗都可控制或显示当前歌曲。",
         "inAppTransport": "Space 播放/暂停，{{mod}} + ←/→ 切歌；播放页 ←/→ 快退或快进 5 秒。更多操作用命令窗口。",
         "shortcutK": "{{mod}} + K 打开命令窗口，功能和设置都可直接搜索。",
         "shortcutP": "{{mod}} + P 打开播放队列；输入行可筛选，也支持 @artist: 等条件。",
         "shortcutB": "{{mod}} + B 打开 Lattice；已在 Lattice 时返回。",
-        "shortcutG": "Ctrl + G 就是刚才那一下：打开当前页面的思索教程。任何时候迷路了，先按它。",
+        "shortcutG": "{{mod}} + G 就是刚才那一下：打开当前页面的思索教程。任何时候迷路了，先按它。",
         "hintSettings": "可在设置 · 通用关闭思索提示，或只提示未看过的区域。下方按钮可直接打开设置。",
         "docs": "这四章只是入门。命令、快捷键、在线来源、本地曲库、可视化和主题见文档站。"
       },
@@ -6342,7 +6375,7 @@ export default {
         "gridMap": "点顶部「全部」打开 GridMap 查看所有集合；{{mod}} + F 或直接输入可筛选集合。",
         "gridSearchResult": "提交右上角搜索后会打开独立搜索工作台，结果按歌曲列出，可播放、打开艺人/专辑或加入队列。",
         "gridCardKeys": "← / → 切换中央海报，Enter 打开当前集合；滚轮和水平拖动执行同样的焦点移动。",
-        "gridPageKeys": "Tab / Shift + Tab 切换页签；{{mod}} + K 命令；{{mod}} + B 进 Lattice（需有队列）；Ctrl + G 本页 Ponder。",
+        "gridPageKeys": "Tab / Shift + Tab 切换页签；{{mod}} + K 命令；{{mod}} + B 进 Lattice（需有队列）；{{mod}} + G 本页 Ponder。",
         "gridView": "集合网格展示刚才打开的卡片所包含的歌曲、专辑或艺人。返回时会回到上一级，并保留原来的位置。",
         "gridViewActions": "选中卡片可以播放或继续进入。页面操作区还会按集合能力提供全部播放、加入队列、编辑等动作。",
         "gridViewBack": "左上角返回按钮退出当前集合，并清理这次进入使用的导航记录。Esc 在没有更内层状态时也会返回。",
@@ -6380,7 +6413,7 @@ export default {
         "latticeLights": "灯光关闭后海报退暗，只保留必要层次；这是显示设置，不会暂停播放或修改队列。",
         "latticePosterKeys": "收起时 Enter/Space 展开；展开后 Enter 播放/暂停，Space 显示控制，Esc 收起。",
         "latticePageKeys": ": + C 当前歌曲；{{mod}} + P 队列；{{mod}} + B 返回；{{mod}} + K 命令；方向键移动。",
-        "help": "Folia 分开处理浏览、播放、命令和设置。Ctrl+G 说明当前页面，有特殊操作的组件也有独立教程。",
+        "help": "Folia 分开处理浏览、播放、命令和设置。{{mod}}+G 说明当前页面，有特殊操作的组件也有独立教程。",
         "helpCommands": "{{mod}} + K 可以搜索全部命令和设置。对于藏得较深的选项，直接搜名称通常比记住它在哪一级更快。",
         "helpOperatingModel": "网格选歌，Player 或 Lattice 播放；底部控制条负责播放，帮助和设置覆盖当前页面。",
         "settings": "左侧按界面、音乐、应用和高级分组列出类别；右侧显示当前类别里的具体设置。",
@@ -6475,7 +6508,7 @@ export default {
         "sourceExportFormats": "窗口上面是导入，接受 lrc、vtt、ttml、qrc、yrc、krc、txt 和 Folia 导出的 .fia；Navidrome 的歌曲不能导入，窗口里只有导出。中间两块把这一首导成文件：.fia 保留逐字时间轴、翻译、背景和声和你保存的分词，能原样导回来；.lrc 是增强型 LRC，别的播放器也能读，但这些 Folia 专有的信息会丢掉。",
         "sourceExportBatch": "最底下一行是批量导出：它会打开命令面板里的导出页，一次导出本机缓存的所有歌词。设置 · 存储与备份「缓存详情」里「歌词」那一行也有同一个入口。",
         "coverTab": "封面页就是这首歌：大封面，下面是歌名、歌手和专辑，再下面一行动作。这一页没有别的内容。",
-        "coverTabDetail": "点击歌手或专辑可进入对应集合。点击歌名复制歌曲信息，按住 Ctrl 点击可打开来源页面。",
+        "coverTabDetail": "点击歌手或专辑可进入对应集合。点击歌名复制歌曲信息，按住 {{mod}} 点击可打开来源页面。",
         "controlsTab": "控制页最上面是音量一行，下面三格是循环、智能过渡和音频效果器：前两格点一下就开关，第三格打开一个窗口。",
         "controlsTabDetail": "再往下是歌词样式、背景类型两行和「播放页透明背景」开关，最下面两行是主题：来源、当前主题、明暗和生成 AI 主题。音频增益与歌词偏移在来源页。",
         "queueTab": "播放列表页是当前播放队列的完整列表，顶上一行写着队列里有多少首。",
