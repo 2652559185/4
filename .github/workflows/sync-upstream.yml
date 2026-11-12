@@ -30,30 +30,35 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git remote add upstream https://github.com/chthollyphile/folia-major.git || true
+          git remote add upstream https://github.com/chthollyphile/folia-major.git 2>/dev/null || true
           git fetch upstream
           git checkout main
+          git reset --hard origin/main
 
-          # 记录 merge 前的本地 HEAD，后面用它恢复 workflows
+          # 记录 merge 前的本地 HEAD（.github/workflows 以此为准）
           BEFORE=$(git rev-parse HEAD)
 
           if ! git merge upstream/main --allow-unrelated-histories --no-edit; then
-            echo "Merge conflict, keeping our workflows and deployment files..."
+            echo "Merge conflict, resolving..."
 
-            # 所有 .github/workflows 冲突都保留本地版本
-            git diff --name-only --diff-filter=U -- .github/workflows | while read -r f; do
-              git checkout --ours -- "$f"
-              git add -- "$f"
-            done
+            # 1) .github/workflows 的冲突：一律标记为删除
+            #    （merge 完成后会从 BEFORE 统一恢复，这里怎么解都不影响结果）
+            while IFS= read -r f; do
+              git rm -f -- "$f" >/dev/null 2>&1 || true
+            done < <(git diff --name-only --diff-filter=U -- .github/workflows)
 
-            # vercel.json 保留本地版本
-            if git diff --name-only --diff-filter=U -- vercel.json | grep -q .; then
-              git checkout --ours -- vercel.json
-              git add -- vercel.json
-            fi
+            # 2) vercel.json 保留本地版本；若本地已删除则保持删除
+            while IFS= read -r f; do
+              if git cat-file -e ":2:$f" 2>/dev/null; then
+                git checkout --ours -- "$f"
+                git add -- "$f"
+              else
+                git rm -f -- "$f" >/dev/null 2>&1 || true
+              fi
+            done < <(git diff --name-only --diff-filter=U -- vercel.json)
 
-            # 还有其他冲突就报错退出，不 push
-            if git diff --name-only --diff-filter=U | grep -q .; then
+            # 3) 其它冲突不处理，报错退出
+            if [ -n "$(git diff --name-only --diff-filter=U)" ]; then
               echo "Unresolved conflicts:"
               git diff --name-only --diff-filter=U
               exit 1
@@ -62,24 +67,19 @@ jobs:
             git commit -m "merge upstream (keep local workflows and vercel.json)"
           fi
 
-          # 关键：把 .github/workflows 整体恢复到 merge 前的本地状态
-          if git ls-tree -r --name-only "$BEFORE" -- .github/workflows | grep -q .; then
-            # 1) 恢复已有文件内容为本地版本
+          # ====== 强制把 .github/workflows 恢复成 BEFORE 的状态 ======
+          # 先清空索引和工作区
+          git rm -r --cached --ignore-unmatch .github/workflows >/dev/null 2>&1 || true
+          rm -rf .github/workflows
+
+          # BEFORE 里有就恢复，没有就保持为空
+          if [ -n "$(git ls-tree -r --name-only "$BEFORE" -- .github/workflows)" ]; then
             git checkout "$BEFORE" -- .github/workflows
+          fi
 
-            # 2) 删除 merge 从上游新增的 workflow（BEFORE 中不存在）
-            git ls-files -z .github/workflows | while IFS= read -r -d '' f; do
-              if ! git cat-file -e "$BEFORE:$f" 2>/dev/null; then
-                git rm -f -- "$f"
-              fi
-            done
-
-            git add .github/workflows
-
-            # 有变化才提交，避免空 commit 导致失败
-            if ! git diff --cached --quiet; then
-              git commit -m "keep local workflows (do not sync upstream .github/workflows)"
-            fi
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "keep local workflows (do not sync upstream .github/workflows)"
           fi
 
           git push origin main
