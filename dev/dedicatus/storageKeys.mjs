@@ -155,6 +155,7 @@ export const STORAGE_KEYS = [
     'web:folia_ponder_seen',
     'web:folia_recent_plays',
     'web:folia_scratchpad_entries',
+    'web:folia_search_history_v1',
     'web:folia_settings_last_section',
     'web:folia_shuffle_round',
     'web:folia_shuffle_round_no_repeat',
@@ -324,4 +325,5 @@ export const STORAGE_KEYS = [
     'web:wallpaper_mode',
     'web:web_obs_theme_mode',
     'web:window_titlebar_side',
+    'web:folia_perf_check_offered',
 ];
