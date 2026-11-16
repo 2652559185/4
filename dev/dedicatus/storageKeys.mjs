@@ -199,7 +199,9 @@ export const STORAGE_KEYS = [
     'web:lattice_poster_tint_enabled',
     'web:lattice_poster_tint_intensity',
     'web:lattice_poster_tint_use_custom_color',
+    'web:lattice_radio_hide_upcoming',
     'web:lattice_vignette',
+    'web:lattice_wall_form',
     'web:library_suite',
     'web:library_suite_prompt_seen',
     'web:local_library_auto_scan',
@@ -262,6 +264,7 @@ export const STORAGE_KEYS = [
     'web:remote_control_click_through',
     'web:remote_control_expand_cover',
     'web:remote_control_hide_titlebar',
+    'web:remote_control_lyric_layout',
     'web:remote_control_skip_taskbar',
     'web:remote_control_text_shade',
     'web:remote_video_export_preset_values',
@@ -326,4 +329,5 @@ export const STORAGE_KEYS = [
     'web:web_obs_theme_mode',
     'web:window_titlebar_side',
     'web:folia_perf_check_offered',
+    'web:visualizer_picker_keep_open',
 ];
