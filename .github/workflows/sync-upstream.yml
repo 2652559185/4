@@ -18,11 +18,11 @@ jobs:
 
     steps:
       - name: Checkout
-        # 升级到 v5 以消除 Node.js 20 的 Deprecated 警告
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN }}
+          # 关键改动 1: 移除 token: ${{ secrets.PAT_TOKEN }}，使用默认的 GITHUB_TOKEN
+          # checkout 动作会自动使用内置的 GITHUB_TOKEN，并持久化认证信息供后续步骤使用
 
       - name: Sync upstream
         run: |
@@ -31,10 +31,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # ====== 【关键修复 1】 ======
-          # actions/checkout 注入的全局认证头可能会导致拉取公开仓库时报错 128
-          # 在这里主动清除它，让 fetch upstream 恢复为纯匿名请求
-          git config --unset-all http.https://github.com/.extraheader || true
+          # 注意：因为 checkout 使用的是有效的 GITHUB_TOKEN，我们不再需要清除认证头
+          # 所以上一版方案中的 `git config --unset-all ...` 命令可以安全移除了
 
           git remote add upstream https://github.com/chthollyphile/folia-major.git 2>/dev/null || true
           git fetch upstream
@@ -46,9 +44,8 @@ jobs:
 
           if ! git merge upstream/main --allow-unrelated-histories --no-edit; then
             echo "Merge conflict, resolving..."
-
+            
             # 1) .github/workflows 的冲突：一律标记为删除
-            #    （merge 完成后会从 BEFORE 统一恢复，这里怎么解都不影响结果）
             while IFS= read -r f; do
               git rm -f -- "$f" >/dev/null 2>&1 || true
             done < <(git diff --name-only --diff-filter=U -- .github/workflows)
@@ -74,11 +71,9 @@ jobs:
           fi
 
           # ====== 强制把 .github/workflows 恢复成 BEFORE 的状态 ======
-          # 先清空索引和工作区
           git rm -r --cached --ignore-unmatch .github/workflows >/dev/null 2>&1 || true
           rm -rf .github/workflows
 
-          # BEFORE 里有就恢复，没有就保持为空
           if [ -n "$(git ls-tree -r --name-only "$BEFORE" -- .github/workflows)" ]; then
             git checkout "$BEFORE" -- .github/workflows
           fi
@@ -88,6 +83,6 @@ jobs:
             git commit -m "keep local workflows (do not sync upstream .github/workflows)"
           fi
 
-          # ====== 【关键修复 2】 ======
-          # 因为我们前面清除了全局的认证 Header，所以推送时需要在 URL 中显式带上 Token
-          git push "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git" main
+          # 关键改动 2: 直接 push 到 origin 即可。
+          # checkout 步骤已经为 origin 配置好了基于 GITHUB_TOKEN 的认证信息
+          git push origin main
