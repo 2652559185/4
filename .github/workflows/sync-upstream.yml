@@ -18,7 +18,8 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        # 升级到 v5 以消除 Node.js 20 的 Deprecated 警告
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           token: ${{ secrets.PAT_TOKEN }}
@@ -29,6 +30,11 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # ====== 【关键修复 1】 ======
+          # actions/checkout 注入的全局认证头可能会导致拉取公开仓库时报错 128
+          # 在这里主动清除它，让 fetch upstream 恢复为纯匿名请求
+          git config --unset-all http.https://github.com/.extraheader || true
 
           git remote add upstream https://github.com/chthollyphile/folia-major.git 2>/dev/null || true
           git fetch upstream
@@ -82,4 +88,6 @@ jobs:
             git commit -m "keep local workflows (do not sync upstream .github/workflows)"
           fi
 
-          git push origin main
+          # ====== 【关键修复 2】 ======
+          # 因为我们前面清除了全局的认证 Header，所以推送时需要在 URL 中显式带上 Token
+          git push "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git" main
