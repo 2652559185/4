@@ -224,6 +224,47 @@ export default {
     "openComments": "看评论与标签",
     "tagCommandDescription_one": "在速记簿「时刻」里看带这个标签的 {{count}} 首",
     "tagCommandDescription_other": "在速记簿「时刻」里看带这个标签的 {{count}} 首",
+    "transferLabel": "时刻（歌的评论与标签）",
+    "transferHint": "导出成一个文件，在别的设备上导入。导入只添加缺少的，已有的评论和标签不动。也认「音乐笔记」模组导出的文件。",
+    "exportFile": "导出文件",
+    "importFile": "导入文件…",
+    "exporting": "正在导出…",
+    "importing": "正在导入…",
+    "exportDone_one": "已导出 {{count}} 首歌的时刻",
+    "exportDone_other": "已导出 {{count}} 首歌的时刻",
+    "exportDoneSkipped_one": "已导出 {{count}} 首歌的时刻；{{skipped}} 首没有写进去（曲库里已经没有的本地歌，或认不出来源的歌）",
+    "exportDoneSkipped_other": "已导出 {{count}} 首歌的时刻；{{skipped}} 首没有写进去（曲库里已经没有的本地歌，或认不出来源的歌）",
+    "exportEmpty": "还没有可以导出的时刻",
+    "exportFailed": "导出失败：读不出时刻的数据",
+    "importModLabel": "从「音乐笔记」模组导入",
+    "importModHint_one": "这台设备上的模组里有 {{count}} 首歌的笔记。正文变成评论，书签变成带时刻的评论，标签照搬；只添加缺少的。",
+    "importModHint_other": "这台设备上的模组里有 {{count}} 首歌的笔记。正文变成评论，书签变成带时刻的评论，标签照搬；只添加缺少的。",
+    "importModButton": "导入",
+    "importConfirmTitle": "导入时刻",
+    "importConfirmBody": "歌 {{songs}} 首 · 评论 {{comments}} 条 · 标签 {{tags}} 个。已经有的不会重复添加。",
+    "importConfirmUnmatched_one": "{{count}} 首本地歌在曲库里找不到，不导入：{{titles}}",
+    "importConfirmUnmatched_other": "{{count}} 首本地歌在曲库里找不到，不导入：{{titles}}",
+    "importConfirmInvalid_one": "{{count}} 条记录读不出来，已跳过。",
+    "importConfirmInvalid_other": "{{count}} 条记录读不出来，已跳过。",
+    "importConfirmLookup": "模组只记了在线歌的名字，导入时会向各音源补齐歌的信息，可能要一会儿。",
+    "importEmpty": "这里面没有能导入的歌",
+    "importDone": "已导入：新添 {{added}} 首歌，补充 {{merged}} 首，评论 {{comments}} 条，新标签 {{tags}} 个",
+    "importDoneOverLimit": "已导入：新添 {{added}} 首歌，补充 {{merged}} 首，评论 {{comments}} 条，新标签 {{tags}} 个；{{over}} 条超出上限，没有添加",
+    "importNothing": "没有要添加的：里面的都已经有了",
+    "importFailed": "导入失败，什么都没有改",
+    "fileErrorNotJson": "这不是 JSON 文件",
+    "fileErrorUnknownFormat": "认不出这个文件：不是 Folia 的时刻文件，也不是「音乐笔记」模组导出的",
+    "fileErrorNewerVersion": "这个文件是更新版本的 Folia 写的，请先更新 Folia",
+    "fileErrorDamaged": "文件内容不对，读不出来",
+    "fileErrorTooLarge": "文件太大了",
+    "fileErrorUnreadable": "读不了这个文件",
+    "modHint_one": "「音乐笔记」模组里有 {{count}} 首歌的笔记，可以导入到这里。",
+    "modHint_other": "「音乐笔记」模组里有 {{count}} 首歌的笔记，可以导入到这里。",
+    "modHintImport": "去导入",
+    "modHintDismiss": "不再提示",
+    "exportTooLarge": "时刻太多，超出了一个文件能读回来的上限，没有导出",
+    "importModUnreadable": "读不出「音乐笔记」模组的数据",
+    "fileErrorModNewerVersion": "这是更新版本的「音乐笔记」模组导出的文件，这一版 Folia 还读不了",
     "saveFailed": "评论没存上（本机存储打不开或已满）"
   },
   "scratchpad": {
@@ -1443,6 +1484,8 @@ export default {
     "generateAITheme": "生成AI主题",
     "libraryConfig": "配置",
     "synced": "已同步",
+    "syncing": "同步中…",
+    "reset": "重置",
     "source": "来源",
     "lyricsMatchSearch": "歌词匹配 / 搜索",
     "songIdOrName": "歌曲ID或名称",
@@ -3313,6 +3356,8 @@ export default {
     "remoteLyricSourceAuto": "跟随副字幕内容",
     "remoteLyricSourceAutoHint": "显示“副字幕内容”选的内容",
     "remoteLyricSourceNone": "不显示",
+    "remoteControlOpen": "打开妙控窗",
+    "remoteControlOpenHint": "也可以通过应用标题栏打开妙控窗",
     "hideRemoteControlTaskbarIcon": "隐藏妙控窗任务栏图标",
     "hideRemoteControlTitlebar": "隐藏妙控窗顶部悬浮栏",
     "hideRemoteControlTitlebarHint": "鼠标靠近顶部时不再显示窗口控制栏",
@@ -4654,6 +4699,33 @@ export default {
       "qqPrivatePlaylists": {
         "title": "QQ 音乐不公开歌单",
         "description": "登录后，自己创建的不公开歌单也能读取歌曲，并支持真正的分页加载。自建后端需要升级到 qq-music-api 3.1.2 或更新版本；旧后端会自动回退，读不到时会明确提示「不是公开歌单」，不再静默显示为空。"
+      }
+    },
+    "v0_8_0": {
+      "intro": "欢迎来到 0.8.0「Severance Update」：这是一次重大更新。音源都变成了可以开关的模组，新增模组市场、能混放各家歌曲的 Folia 歌单、给歌写评论的「时刻」，以及分轨调音台。",
+      "sourceMods": {
+        "title": "音源都是模组了",
+        "description": "十家内置音源都改成了音源模组，在「设置 → 音源」逐家开关、看占用、清除数据。第一次打开时会问你用哪些平台。新增洛雪音源，可以导入自定义源脚本。"
+      },
+      "modMarket": {
+        "title": "模组市场",
+        "description": "在模组窗口里浏览、安装、更新和卸载模组。模组系统默认开启，第三方的社区模组要先在模组页打开开关。"
+      },
+      "foliaPlaylists": {
+        "title": "Folia 歌单",
+        "description": "一张歌单里能放不同来源的歌。平台歌单和专辑可以存成 Folia 歌单，之后从原歌单更新，也能导出、导入。原来的本地歌单已经并进来，首页页签分成了两级。"
+      },
+      "moments": {
+        "title": "时刻",
+        "description": "速记簿多了第四页「时刻」：给歌打标签、写评论、在时间轴上留记号，记号会显示在进度条上。评论可以导出和导入。"
+      },
+      "stemMixer": {
+        "title": "分轨调音台",
+        "description": "音频效果器里新增分轨调音台，用显卡实时把歌分成鼓、贝斯、其他、人声四轨，各自调强度，一键切成伴奏或只听人声。"
+      },
+      "moreDetails": {
+        "title": "更多改进",
+        "description": "进度条标出副歌起点。主窗口可以整体缩放。装了完整版 ffmpeg 时能导出带透明通道的视频。搜索结果滚到底自动加载更多。"
       }
     },
     "v0_7_29": {

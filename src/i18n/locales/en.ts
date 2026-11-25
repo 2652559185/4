@@ -224,6 +224,47 @@ export default {
     "openComments": "Comments and tags",
     "tagCommandDescription_one": "See the {{count}} song with this tag in the scratchpad’s Moments",
     "tagCommandDescription_other": "See the {{count}} songs with this tag in the scratchpad’s Moments",
+    "transferLabel": "Moments (song comments and tags)",
+    "transferHint": "Export them as one file and import it on another device. Importing only adds what is missing; your comments and tags stay as they are. Files exported by the Music Notes mod work too.",
+    "exportFile": "Export file",
+    "importFile": "Import file…",
+    "exporting": "Exporting…",
+    "importing": "Importing…",
+    "exportDone_one": "Exported the moments of {{count}} song",
+    "exportDone_other": "Exported the moments of {{count}} songs",
+    "exportDoneSkipped_one": "Exported the moments of {{count}} song; {{skipped}} were left out (local songs no longer in the library, or songs from an unknown source)",
+    "exportDoneSkipped_other": "Exported the moments of {{count}} songs; {{skipped}} were left out (local songs no longer in the library, or songs from an unknown source)",
+    "exportEmpty": "There are no moments to export yet",
+    "exportFailed": "Export failed: the moments could not be read",
+    "importModLabel": "Import from the Music Notes mod",
+    "importModHint_one": "The mod on this device has notes for {{count}} song. Notes become comments, bookmarks become timed comments, tags carry over; only what is missing is added.",
+    "importModHint_other": "The mod on this device has notes for {{count}} songs. Notes become comments, bookmarks become timed comments, tags carry over; only what is missing is added.",
+    "importModButton": "Import",
+    "importConfirmTitle": "Import moments",
+    "importConfirmBody": "Songs: {{songs}} · Comments: {{comments}} · Tags: {{tags}}. Anything already here is not added again.",
+    "importConfirmUnmatched_one": "{{count}} local song is not in the library and will not be imported: {{titles}}",
+    "importConfirmUnmatched_other": "{{count}} local songs are not in the library and will not be imported: {{titles}}",
+    "importConfirmInvalid_one": "{{count}} record could not be read and was skipped.",
+    "importConfirmInvalid_other": "{{count}} records could not be read and were skipped.",
+    "importConfirmLookup": "The mod kept only the names of online songs, so their details are looked up from each source while importing. This can take a moment.",
+    "importEmpty": "There are no songs in it to import",
+    "importDone": "Imported: {{added}} new songs, {{merged}} updated, {{comments}} comments, {{tags}} new tags",
+    "importDoneOverLimit": "Imported: {{added}} new songs, {{merged}} updated, {{comments}} comments, {{tags}} new tags; {{over}} over the limits were left out",
+    "importNothing": "Nothing new to add: everything in it is already here",
+    "importFailed": "Import failed; nothing was changed",
+    "fileErrorNotJson": "This is not a JSON file",
+    "fileErrorUnknownFormat": "Unknown file: it is neither a Folia moments file nor a Music Notes export",
+    "fileErrorNewerVersion": "This file was written by a newer Folia. Update Folia first",
+    "fileErrorDamaged": "The file is damaged and cannot be read",
+    "fileErrorTooLarge": "The file is too large",
+    "fileErrorUnreadable": "The file could not be read",
+    "modHint_one": "The Music Notes mod has notes for {{count}} song that you can import here.",
+    "modHint_other": "The Music Notes mod has notes for {{count}} songs that you can import here.",
+    "modHintImport": "Import",
+    "modHintDismiss": "Don’t show again",
+    "exportTooLarge": "There are too many moments for one file to be read back, so nothing was exported",
+    "importModUnreadable": "The Music Notes mod’s data could not be read",
+    "fileErrorModNewerVersion": "This file comes from a newer version of the Music Notes mod, which this Folia cannot read yet",
     "saveFailed": "The comment wasn't saved (local storage is unavailable or full)"
   },
   "scratchpad": {
@@ -1443,6 +1484,8 @@ export default {
     "generateAITheme": "Generate AI Theme",
     "libraryConfig": "Library & Config",
     "synced": "Synced",
+    "syncing": "Syncing…",
+    "reset": "Reset",
     "source": "Source",
     "lyricsMatchSearch": "Lyrics Match / Search",
     "songIdOrName": "Song ID or Name",
@@ -3313,6 +3356,8 @@ export default {
     "remoteLyricSourceAuto": "Follow Subtitle Content",
     "remoteLyricSourceAutoHint": "Shows what the Subtitle Content setting picks",
     "remoteLyricSourceNone": "None",
+    "remoteControlOpen": "Open Remote Control",
+    "remoteControlOpenHint": "You can also open it from the app’s title bar",
     "hideRemoteControlTaskbarIcon": "Hide Remote Control taskbar icon",
     "hideRemoteControlTitlebar": "Hide Remote Control top floating bar",
     "hideRemoteControlTitlebarHint": "No window control bar when the cursor nears the top",
@@ -4654,6 +4699,33 @@ export default {
       "qqPrivatePlaylists": {
         "title": "Private QQ Music Playlists",
         "description": "When signed in, your own private playlists now load their songs, with real paging. Self-hosted backends must run qq-music-api 3.1.2 or later; older backends fall back automatically, and a playlist that cannot be read now says it is not public instead of silently showing as empty."
+      }
+    },
+    "v0_8_0": {
+      "intro": "Welcome to 0.8.0, the Severance Update—a major update. Every music source is now a mod you can switch on and off, and there is a mod market, Folia playlists that mix songs from any source, Moments for writing notes on songs, and a stem mixer.",
+      "sourceMods": {
+        "title": "Music sources are mods now",
+        "description": "All ten built-in sources are now source mods: turn each on or off, see its storage and clear its data in Settings → Sources. On first launch Folia asks which platforms you use. The new LX Music source lets you import a custom source script."
+      },
+      "modMarket": {
+        "title": "Mod market",
+        "description": "Browse, install, update and uninstall mods in the Mods window. The mod system is on by default; third-party community mods need their switch turned on in the Mods page first."
+      },
+      "foliaPlaylists": {
+        "title": "Folia playlists",
+        "description": "One playlist can hold songs from different sources. Save a platform playlist or album as a Folia playlist, update it from the original later, and export or import it. Your old local playlists have moved in, and home tabs now come in two levels."
+      },
+      "moments": {
+        "title": "Moments",
+        "description": "The scratchpad has a fourth page, Moments: tag songs, write comments and leave marks on the timeline, which show up on the progress bar. Comments can be exported and imported."
+      },
+      "stemMixer": {
+        "title": "Stem mixer",
+        "description": "Audio effects has a new stem mixer: your GPU splits the song live into drums, bass, other and vocals, each with its own level, with one-tap karaoke and vocals-only presets."
+      },
+      "moreDetails": {
+        "title": "More improvements",
+        "description": "The progress bar marks where the chorus starts. The main window can be zoomed as a whole. With a full ffmpeg installed you can export video with a transparent background. Search results load more as you scroll to the end."
       }
     },
     "v0_7_29": {

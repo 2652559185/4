@@ -224,6 +224,47 @@ export default {
     "openComments": "Bình luận và thẻ",
     "tagCommandDescription_one": "Xem {{count}} bài có thẻ này trong Khoảnh khắc của sổ ghi nhanh",
     "tagCommandDescription_other": "Xem {{count}} bài có thẻ này trong Khoảnh khắc của sổ ghi nhanh",
+    "transferLabel": "Khoảnh khắc (bình luận và thẻ của bài hát)",
+    "transferHint": "Xuất thành một tệp rồi nhập trên thiết bị khác. Khi nhập chỉ thêm những gì còn thiếu; bình luận và thẻ hiện có giữ nguyên. Tệp xuất từ mod Music Notes cũng dùng được.",
+    "exportFile": "Xuất tệp",
+    "importFile": "Nhập tệp…",
+    "exporting": "Đang xuất…",
+    "importing": "Đang nhập…",
+    "exportDone_one": "Đã xuất khoảnh khắc của {{count}} bài",
+    "exportDone_other": "Đã xuất khoảnh khắc của {{count}} bài",
+    "exportDoneSkipped_one": "Đã xuất khoảnh khắc của {{count}} bài; {{skipped}} bài không được ghi (bài cục bộ không còn trong thư viện, hoặc bài từ nguồn không xác định)",
+    "exportDoneSkipped_other": "Đã xuất khoảnh khắc của {{count}} bài; {{skipped}} bài không được ghi (bài cục bộ không còn trong thư viện, hoặc bài từ nguồn không xác định)",
+    "exportEmpty": "Chưa có khoảnh khắc nào để xuất",
+    "exportFailed": "Xuất thất bại: không đọc được dữ liệu khoảnh khắc",
+    "importModLabel": "Nhập từ mod Music Notes",
+    "importModHint_one": "Mod trên thiết bị này có ghi chú cho {{count}} bài. Ghi chú thành bình luận, dấu mốc thành bình luận có thời điểm, thẻ được giữ nguyên; chỉ thêm những gì còn thiếu.",
+    "importModHint_other": "Mod trên thiết bị này có ghi chú cho {{count}} bài. Ghi chú thành bình luận, dấu mốc thành bình luận có thời điểm, thẻ được giữ nguyên; chỉ thêm những gì còn thiếu.",
+    "importModButton": "Nhập",
+    "importConfirmTitle": "Nhập khoảnh khắc",
+    "importConfirmBody": "Bài hát: {{songs}} · Bình luận: {{comments}} · Thẻ: {{tags}}. Những gì đã có sẽ không thêm lại.",
+    "importConfirmUnmatched_one": "{{count}} bài cục bộ không có trong thư viện và sẽ không được nhập: {{titles}}",
+    "importConfirmUnmatched_other": "{{count}} bài cục bộ không có trong thư viện và sẽ không được nhập: {{titles}}",
+    "importConfirmInvalid_one": "{{count}} bản ghi không đọc được và đã bỏ qua.",
+    "importConfirmInvalid_other": "{{count}} bản ghi không đọc được và đã bỏ qua.",
+    "importConfirmLookup": "Mod chỉ lưu tên của bài trực tuyến, nên khi nhập sẽ tra thông tin từ từng nguồn. Việc này có thể mất một lúc.",
+    "importEmpty": "Không có bài nào để nhập",
+    "importDone": "Đã nhập: {{added}} bài mới, {{merged}} bài được bổ sung, {{comments}} bình luận, {{tags}} thẻ mới",
+    "importDoneOverLimit": "Đã nhập: {{added}} bài mới, {{merged}} bài được bổ sung, {{comments}} bình luận, {{tags}} thẻ mới; {{over}} mục vượt giới hạn nên không thêm",
+    "importNothing": "Không có gì mới để thêm: mọi thứ đã có sẵn",
+    "importFailed": "Nhập thất bại; không có gì thay đổi",
+    "fileErrorNotJson": "Đây không phải tệp JSON",
+    "fileErrorUnknownFormat": "Không nhận ra tệp: không phải tệp khoảnh khắc của Folia, cũng không phải tệp xuất của Music Notes",
+    "fileErrorNewerVersion": "Tệp này do Folia mới hơn ghi. Hãy cập nhật Folia trước",
+    "fileErrorDamaged": "Tệp bị hỏng, không đọc được",
+    "fileErrorTooLarge": "Tệp quá lớn",
+    "fileErrorUnreadable": "Không đọc được tệp",
+    "modHint_one": "Mod Music Notes có ghi chú cho {{count}} bài, có thể nhập vào đây.",
+    "modHint_other": "Mod Music Notes có ghi chú cho {{count}} bài, có thể nhập vào đây.",
+    "modHintImport": "Nhập",
+    "modHintDismiss": "Không hiện lại",
+    "exportTooLarge": "Quá nhiều khoảnh khắc để đọc lại từ một tệp nên không xuất",
+    "importModUnreadable": "Không đọc được dữ liệu của mod Music Notes",
+    "fileErrorModNewerVersion": "Tệp này từ phiên bản mới hơn của mod Music Notes, phiên bản Folia này chưa đọc được",
     "saveFailed": "Chưa lưu được bình luận (bộ nhớ cục bộ không dùng được hoặc đã đầy)"
   },
   "scratchpad": {
@@ -1443,6 +1484,8 @@ export default {
     "generateAITheme": "Tạo chủ đề AI",
     "libraryConfig": "Thư viện & Cấu hình",
     "synced": "Đã đồng bộ",
+    "syncing": "Đang đồng bộ…",
+    "reset": "Đặt lại",
     "source": "Nguồn",
     "lyricsMatchSearch": "Khớp / Tìm kiếm lời",
     "songIdOrName": "ID hoặc tên bài hát",
@@ -3313,6 +3356,8 @@ export default {
     "remoteLyricSourceAuto": "Theo nội dung phụ đề",
     "remoteLyricSourceAutoHint": "Hiển thị nội dung mà cài đặt Nội dung phụ đề chọn",
     "remoteLyricSourceNone": "Không hiển thị",
+    "remoteControlOpen": "Mở cửa sổ điều khiển",
+    "remoteControlOpenHint": "Cũng có thể mở từ thanh tiêu đề của ứng dụng",
     "hideRemoteControlTaskbarIcon": "Ẩn biểu tượng cửa sổ điều khiển trên thanh tác vụ",
     "hideRemoteControlTitlebar": "Ẩn thanh nổi trên cùng của cửa sổ điều khiển",
     "hideRemoteControlTitlebarHint": "Không hiện thanh điều khiển cửa sổ khi di chuột lại gần mép trên",
@@ -4654,6 +4699,33 @@ export default {
       "qqPrivatePlaylists": {
         "title": "Danh sách phát QQ Music riêng tư",
         "description": "Sau khi đăng nhập, danh sách phát riêng tư của bạn nay có thể tải bài hát với phân trang thực tế. Máy chủ tự lưu trữ cần chạy qq-music-api 3.1.2 trở lên; phiên bản cũ hơn sẽ tự động quay về cơ chế dự phòng, và danh sách phát không đọc được sẽ báo rõ là danh sách không công khai thay vì hiển thị trống."
+      }
+    },
+    "v0_8_0": {
+      "intro": "Chào mừng bạn đến với 0.8.0, Severance Update—một bản cập nhật lớn. Mọi nguồn nhạc giờ đều là mod có thể bật tắt, cùng với kho mod, danh sách phát Folia trộn bài từ mọi nguồn, Khoảnh khắc để ghi chú cho bài hát, và bộ trộn stem.",
+      "sourceMods": {
+        "title": "Nguồn nhạc giờ là mod",
+        "description": "Cả mười nguồn tích hợp giờ là mod nguồn: bật hoặc tắt từng nguồn, xem dung lượng và xóa dữ liệu trong Cài đặt → Nguồn. Lần mở đầu tiên, Folia sẽ hỏi bạn dùng những nền tảng nào. Nguồn mới LX Music cho phép nhập tập lệnh nguồn tùy chỉnh."
+      },
+      "modMarket": {
+        "title": "Kho mod",
+        "description": "Duyệt, cài, cập nhật và gỡ mod trong cửa sổ Mod. Hệ thống mod được bật sẵn; mod cộng đồng của bên thứ ba cần bật công tắc trong trang Mod trước."
+      },
+      "foliaPlaylists": {
+        "title": "Danh sách phát Folia",
+        "description": "Một danh sách phát có thể chứa bài từ nhiều nguồn khác nhau. Lưu danh sách phát hoặc album của nền tảng thành danh sách phát Folia, sau này cập nhật từ bản gốc, và xuất hoặc nhập được. Các danh sách phát cục bộ cũ đã được chuyển vào đây, và các thẻ trang chủ giờ có hai cấp."
+      },
+      "moments": {
+        "title": "Khoảnh khắc",
+        "description": "Sổ ghi nhanh có thêm trang thứ tư, Khoảnh khắc: gắn thẻ cho bài, viết bình luận và để lại dấu trên dòng thời gian, hiện ngay trên thanh tiến trình. Bình luận có thể xuất và nhập."
+      },
+      "stemMixer": {
+        "title": "Bộ trộn stem",
+        "description": "Hiệu ứng âm thanh có bộ trộn stem mới: GPU tách bài hát theo thời gian thực thành trống, bass, khác và giọng hát, mỗi kênh chỉnh mức riêng, kèm cài đặt nhanh karaoke và chỉ giọng hát."
+      },
+      "moreDetails": {
+        "title": "Cải tiến khác",
+        "description": "Thanh tiến trình đánh dấu chỗ bắt đầu điệp khúc. Cửa sổ chính có thể phóng to toàn bộ. Khi đã cài ffmpeg bản đầy đủ, bạn có thể xuất video nền trong suốt. Kết quả tìm kiếm tự tải thêm khi cuộn đến cuối."
       }
     },
     "v0_7_29": {
